@@ -1,0 +1,46 @@
+{
+  "name": "ai-devkit",
+  "version": "0.1.0",
+  "description": "A CLI toolkit for AI-assisted software development with phase templates and environment setup",
+  "main": "dist/index.js",
+  "bin": {
+    "ai-devkit": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/cli.ts",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "development",
+    "cli",
+    "templates",
+    "cursor",
+    "claude"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^8.2.6",
+    "fs-extra": "^11.2.0",
+    "yaml": "^2.3.4",
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@types/inquirer": "^8.2.10",
+    "@types/fs-extra": "^11.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
+
