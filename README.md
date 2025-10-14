@@ -354,7 +354,7 @@ MIT
 | Guided feature workflow | `/new-requirement` (Cursor & Claude) |
 | Execute feature plan | `/execute-plan` (Cursor & Claude) |
 | Generate tests | `/writing-test` (Cursor & Claude) |
-| **Local code review** | `/code-review` (Cursor & Claude) |
+| Local code review | `/code-review` (Cursor & Claude) |
 | Help | `npx ai-devkit --help` |
 
 | Quick links | Description |
