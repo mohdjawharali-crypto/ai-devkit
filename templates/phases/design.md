@@ -9,7 +9,14 @@ description: Define the technical architecture, components, and data models
 ## Architecture Overview
 **What is the high-level system structure?**
 
-- System architecture diagram (describe or link)
+- Include a mermaid diagram that captures the main components and their relationships. Example:
+  ```mermaid
+  graph TD
+    Client -->|HTTPS| API
+    API --> ServiceA
+    API --> ServiceB
+    ServiceA --> Database[(DB)]
+  ```
 - Key components and their responsibilities
 - Technology stack choices and rationale
 

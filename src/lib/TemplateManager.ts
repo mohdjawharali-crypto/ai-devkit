@@ -73,12 +73,24 @@ export class TemplateManager {
     const files: string[] = [];
 
     // Copy Claude workspace config
-    const workspaceSource = path.join(this.templatesDir, 'env', 'claude', 'workspace.md');
+    const workspaceSource = path.join(this.templatesDir, 'env', 'claude', 'CLAUDE.md');
     const workspaceDir = path.join(this.targetDir, '.claude');
-    const workspaceTarget = path.join(workspaceDir, 'workspace.md');
+    const workspaceTarget = path.join(workspaceDir, 'CLAUDE.md');
     await fs.ensureDir(workspaceDir);
     await fs.copy(workspaceSource, workspaceTarget);
     files.push(workspaceTarget);
+
+    // Copy Claude commands
+    const commandsSourceDir = path.join(this.templatesDir, 'env', 'claude', 'commands');
+    const commandsTargetDir = path.join(this.targetDir, '.claude', 'commands');
+    await fs.ensureDir(commandsTargetDir);
+    await fs.copy(commandsSourceDir, commandsTargetDir);
+    
+    // List all command files for feedback
+    const commandFiles = await fs.readdir(commandsSourceDir);
+    commandFiles.forEach(file => {
+      files.push(path.join(commandsTargetDir, file));
+    });
 
     return files;
   }
@@ -95,7 +107,7 @@ export class TemplateManager {
     }
 
     if (environment === 'claude' || environment === 'both') {
-      const workspaceExists = await fs.pathExists(path.join(this.targetDir, '.claude', 'workspace.md'));
+      const workspaceExists = await fs.pathExists(path.join(this.targetDir, '.claude', 'CLAUDE.md'));
       if (workspaceExists) return true;
     }
 

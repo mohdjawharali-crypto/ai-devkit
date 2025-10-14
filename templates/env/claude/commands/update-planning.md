@@ -1,4 +1,4 @@
-# Planning Update Assistant
+# Planning Update Assistant (Claude)
 
 Please help me reconcile the current implementation progress with our planning documentation.
 

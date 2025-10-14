@@ -1,8 +1,43 @@
+import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { ConfigManager } from '../lib/Config';
 import { TemplateManager } from '../lib/TemplateManager';
 import { Environment, Phase, AVAILABLE_PHASES, PHASE_DISPLAY_NAMES } from '../types';
+
+function isGitAvailable(): boolean {
+  try {
+    execSync('git --version', { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function ensureGitRepository(): void {
+  if (!isGitAvailable()) {
+    console.log(
+      chalk.yellow(
+        '⚠️  Git is not installed or not available on the PATH. Skipping repository initialization.'
+      )
+    );
+    return;
+  }
+
+  try {
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+  } catch {
+    try {
+      execSync('git init', { stdio: 'ignore' });
+      console.log(chalk.green('✓ Initialized a new git repository'));
+    } catch (error) {
+      console.log(
+        chalk.red('✗ Failed to initialize git repository:'),
+        error instanceof Error ? error.message : error
+      );
+    }
+  }
+}
 
 interface InitOptions {
   environment?: Environment;
@@ -13,6 +48,8 @@ interface InitOptions {
 export async function initCommand(options: InitOptions) {
   const configManager = new ConfigManager();
   const templateManager = new TemplateManager();
+
+  ensureGitRepository();
 
   // Check if already initialized
   if (await configManager.exists()) {

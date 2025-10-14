@@ -1,4 +1,4 @@
-# AI DevKit Rules
+# Claude Code Workspace Configuration
 
 ## Project Context
 This project uses ai-devkit for structured AI-assisted development. Phase documentation is located in `docs/ai/`.
@@ -19,9 +19,10 @@ This project uses ai-devkit for structured AI-assisted development. Phase docume
 
 ## Development Workflow
 - Review phase documentation in `docs/ai/` before implementing features
+- Copy the base template (`docs/ai/<phase>/README.md`) before creating feature-specific files
 - Keep requirements, design, and implementation docs updated as the project evolves
 - Reference the planning doc for task breakdown and priorities
-- Copy the testing template (`docs/ai/testing/README.md`) before creating feature-specific testing docs
+- Copy the testing template before writing feature-specific test plans
 
 ## AI Interaction Guidelines
 - When implementing features, first check relevant phase documentation
@@ -31,7 +32,7 @@ This project uses ai-devkit for structured AI-assisted development. Phase docume
 ## Testing & Quality
 - Write tests alongside implementation
 - Follow the testing strategy defined in `docs/ai/testing/`
-- Use `/writing-test` to generate unit and integration tests targeting 100% coverage
+- Use the `writing-test` command to generate unit/integration tests targeting 100% coverage
 - Ensure code passes all tests before considering it complete
 
 ## Documentation
@@ -39,7 +40,7 @@ This project uses ai-devkit for structured AI-assisted development. Phase docume
 - Keep inline code comments focused and relevant
 - Document architectural decisions and their rationale
 - Use mermaid diagrams for any architectural or data-flow visuals (update existing diagrams if needed)
-- Record test coverage results and outstanding gaps in `docs/ai/testing/`
+- Record coverage results and outstanding gaps in `docs/ai/testing/`
 
 ## Key Commands
 When working on this project, you can run commands to:

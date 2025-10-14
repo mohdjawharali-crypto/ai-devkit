@@ -43,7 +43,7 @@ This will:
 ## Available Phases
 
 - **Requirements**: Problem understanding, requirements gathering, and success criteria
-- **Design**: System architecture, data models, and technical design
+- **Design**: System architecture, data models, and technical design (include mermaid diagrams for architecture/data flow)
 - **Planning**: Task breakdown, milestones, and project timeline
 - **Implementation**: Technical implementation notes and code guidelines
 - **Testing**: Testing strategy, test cases, and quality assurance
@@ -129,7 +129,14 @@ your-project/
 ### For Claude Code:
 ```
 └── .claude/
-    └── workspace.md          # Workspace configuration
+    ├── CLAUDE.md          # Workspace configuration
+    └── commands/             # Custom commands (Markdown files)
+        ├── review-requirements.md
+        ├── review-design.md
+        ├── check-implementation.md
+        ├── update-planning.md
+        ├── suggest-tests.md
+        └── new-requirement.md
 ```
 
 ## Customizing Templates
@@ -161,18 +168,34 @@ Available slash commands:
 - `/review-design`: Review system design and architecture
 - `/check-implementation`: Compare implementation with design
 - `/update-planning`: Update planning and task breakdown
-- `/suggest-tests`: Suggest test cases based on strategy
+- `/writing-test`: Write unit/integration tests targeting 100% coverage
+- `/new-requirement`: 🆕 Complete workflow for adding a new feature from requirements to PR
+- `/code-review`: 🆕 Structured local code review against design docs before pushing changes
+- `/execute-plan`: 🆕 Walk a feature plan task-by-task with interactive prompts
 
 Each command is stored as a plain Markdown file in `.cursor/commands/` and will automatically appear when you type `/` in Cursor's chat input.
 
 ### Claude Code
 
 Generated files:
-- `.claude/workspace.md`: Workspace configuration and guidelines
+- `.claude/CLAUDE.md`: Workspace configuration and guidelines
+- `.claude/commands/`: Custom commands as Markdown files
 
-The workspace configuration helps Claude Code understand your project structure and development workflow.
+Available commands:
+- `review-requirements` - Review and summarize requirements
+- `review-design` - Review system design and architecture
+- `check-implementation` - Compare implementation with design
+- `update-planning` - Update planning and task breakdown
+- `writing-test` - Write unit/integration tests targeting 100% coverage
+- `new-requirement` - 🆕 Complete workflow for adding a new feature from requirements to PR
+- `code-review` - 🆕 Structured local code review against design docs before pushing changes
+- `execute-plan` - 🆕 Walk a feature plan task-by-task with interactive prompts
 
-## Workflow Example
+Commands can be referenced in Claude Code chats to guide AI assistance through your development phases.
+
+## Workflow Examples
+
+### Initial Project Setup
 
 1. **Initialize your project:**
    ```bash
@@ -184,7 +207,8 @@ The workspace configuration helps Claude Code understand your project structure 
    - Use your AI assistant to help clarify and document requirements
 
 3. **Design your system:**
-   - Complete `docs/ai/design/README.md`
+   - Complete `docs/ai/design/README.md` and feature-specific files
+   - Include mermaid diagrams for architecture, component interactions, and data flow
    - Reference requirements when making design decisions
 
 4. **Plan your work:**
@@ -204,6 +228,48 @@ The workspace configuration helps Claude Code understand your project structure 
 
 8. **Monitor and iterate:**
    - Set up monitoring per `docs/ai/monitoring/README.md`
+
+### Adding a New Feature (Workflow Command)
+
+🆕 **Use the `/new-requirement` command for a guided workflow:**
+
+1. **In Cursor or Claude Code**, type `/new-requirement`
+2. The AI will guide you through:
+   - 📋 Capturing requirement details
+   - 🔍 Creating feature-specific documentation (copy the template README first, then customize)
+   - 📐 Designing the solution
+   - 📅 Planning tasks and breaking down work
+   - 💻 Implementation (task by task)
+   - ✅ Testing and verification
+   - 🔀 Git commits and PR/MR creation
+
+After drafting requirements and design docs, run **`/review-requirements`** and **`/review-design`** to tighten the documentation before coding.
+
+Before pushing your branch, run **`/code-review`** to perform a structured local review:
+- Checks alignment with design docs
+- Spots logic/security/performance issues
+- Highlights redundant code and missing tests
+- Suggests documentation updates and next steps
+
+📘 Need the full checklist? See [WORKFLOW.md](WORKFLOW.md#code-review-workflow) for detailed guidance.
+
+After planning, run **`/execute-plan`** to step through each task interactively:
+- Reads `docs/ai/planning/feature-{name}.md`
+- Presents tasks in order with context
+- Captures status/notes for each task
+- Reminds you to update docs and rerun `/code-review`
+- Prompts you to generate tests via `/writing-test` for full coverage
+
+This creates feature-specific files:
+- `docs/ai/requirements/feature-{name}.md`
+- `docs/ai/design/feature-{name}.md`
+- `docs/ai/planning/feature-{name}.md`
+- `docs/ai/implementation/feature-{name}.md`
+- `docs/ai/testing/feature-{name}.md`
+
+The workflow provides structured prompts at each step and generates git commands for you to run manually.
+
+📖 **Detailed workflow guide:** See [WORKFLOW.md](WORKFLOW.md) for a complete guide with examples.
 
 ## Use Cases
 
@@ -258,6 +324,8 @@ npm link
 ai-devkit init
 ```
 
+> **Note:** `ai-devkit init` now ensures the current directory is a git repository. If git is available and the repo isn't initialized, it will run `git init` automatically.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues and pull requests.
@@ -269,4 +337,24 @@ MIT
 ---
 
 **Happy building with AI! 🚀**
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Initialize everything | `npx ai-devkit init --all` |
+| Initialize for Cursor | `npx ai-devkit init --environment cursor` |
+| Add specific phases | `npx ai-devkit init --phases requirements,design` |
+| Add one phase later | `npx ai-devkit phase testing` |
+| Guided feature workflow | `/new-requirement` (Cursor & Claude) |
+| Execute feature plan | `/execute-plan` (Cursor & Claude) |
+| Generate tests | `/writing-test` (Cursor & Claude) |
+| **Local code review** | `/code-review` (Cursor & Claude) |
+| Help | `npx ai-devkit --help` |
+
+| Quick links | Description |
+|-------------|-------------|
+| [WORKFLOW.md](WORKFLOW.md) | Full feature workflow guide (+ code review checklist) |
+| [CHANGELOG.md](CHANGELOG.md) | Recent changes and release notes |
+| [templates/](templates/) | Phase and environment templates |
 
