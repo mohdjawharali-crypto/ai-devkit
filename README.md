@@ -119,24 +119,29 @@ your-project/
     ├── rules/                # Project-specific rules (Markdown files)
     │   └── ai-devkit.md
     └── commands/             # Custom slash commands (Markdown files)
-        ├── review-requirements.md
-        ├── review-design.md
-        ├── check-implementation.md
+        ├── new-requirement.md
+        ├── code-review.md
+        ├── execute-plan.md
+        ├── writing-test.md
         ├── update-planning.md
-        └── suggest-tests.md
+        ├── check-implementation.md
+        ├── review-design.md
+        └── review-requirements.md
 ```
 
 ### For Claude Code:
 ```
 └── .claude/
-    ├── CLAUDE.md          # Workspace configuration
+    ├── CLAUDE.md             # Workspace configuration
     └── commands/             # Custom commands (Markdown files)
-        ├── review-requirements.md
-        ├── review-design.md
-        ├── check-implementation.md
+        ├── new-requirement.md
+        ├── code-review.md
+        ├── execute-plan.md
+        ├── writing-test.md
         ├── update-planning.md
-        ├── suggest-tests.md
-        └── new-requirement.md
+        ├── check-implementation.md
+        ├── review-design.md
+        └── review-requirements.md
 ```
 
 ## Customizing Templates
@@ -164,14 +169,14 @@ Generated files:
 - `.cursor/commands/`: Custom slash commands as Markdown files (per [Cursor documentation](https://cursor.com/docs/agent/chat/commands))
 
 Available slash commands:
-- `/review-requirements`: Review and summarize requirements
-- `/review-design`: Review system design and architecture
-- `/check-implementation`: Compare implementation with design
-- `/update-planning`: Update planning and task breakdown
+- `/new-requirement`: Complete workflow for adding a new feature from requirements to PR
+- `/code-review`: Structured local code review against design docs before pushing changes
+- `/execute-plan`: Walk a feature plan task-by-task with interactive prompts
 - `/writing-test`: Write unit/integration tests targeting 100% coverage
-- `/new-requirement`: 🆕 Complete workflow for adding a new feature from requirements to PR
-- `/code-review`: 🆕 Structured local code review against design docs before pushing changes
-- `/execute-plan`: 🆕 Walk a feature plan task-by-task with interactive prompts
+- `/update-planning`: Update planning and task breakdown
+- `/check-implementation`: Compare implementation with design
+- `/review-design`: Review system design and architecture
+- `/review-requirements`: Review and summarize requirements
 
 Each command is stored as a plain Markdown file in `.cursor/commands/` and will automatically appear when you type `/` in Cursor's chat input.
 
@@ -182,14 +187,14 @@ Generated files:
 - `.claude/commands/`: Custom commands as Markdown files
 
 Available commands:
-- `review-requirements` - Review and summarize requirements
-- `review-design` - Review system design and architecture
-- `check-implementation` - Compare implementation with design
-- `update-planning` - Update planning and task breakdown
+- `new-requirement` - Complete workflow for adding a new feature from requirements to PR
+- `code-review` - Structured local code review against design docs before pushing changes
+- `execute-plan` - Walk a feature plan task-by-task with interactive prompts
 - `writing-test` - Write unit/integration tests targeting 100% coverage
-- `new-requirement` - 🆕 Complete workflow for adding a new feature from requirements to PR
-- `code-review` - 🆕 Structured local code review against design docs before pushing changes
-- `execute-plan` - 🆕 Walk a feature plan task-by-task with interactive prompts
+- `update-planning` - Update planning and task breakdown
+- `check-implementation` - Compare implementation with design
+- `review-design` - Review system design and architecture
+- `review-requirements` - Review and summarize requirements
 
 Commands can be referenced in Claude Code chats to guide AI assistance through your development phases.
 
@@ -229,47 +234,47 @@ Commands can be referenced in Claude Code chats to guide AI assistance through y
 8. **Monitor and iterate:**
    - Set up monitoring per `docs/ai/monitoring/README.md`
 
-### Adding a New Feature (Workflow Command)
+### Adding a New Feature
 
-🆕 **Use the `/new-requirement` command for a guided workflow:**
+**Use the `/new-requirement` command for a guided workflow:**
 
 1. **In Cursor or Claude Code**, type `/new-requirement`
 2. The AI will guide you through:
    - 📋 Capturing requirement details
-   - 🔍 Creating feature-specific documentation (copy the template README first, then customize)
+   - 🔍 Creating feature-specific documentation
    - 📐 Designing the solution
    - 📅 Planning tasks and breaking down work
    - 💻 Implementation (task by task)
    - ✅ Testing and verification
    - 🔀 Git commits and PR/MR creation
 
-After drafting requirements and design docs, run **`/review-requirements`** and **`/review-design`** to tighten the documentation before coding.
+**Review and refine your documentation:**
+- After drafting requirements, run `/review-requirements` to validate completeness
+- After drafting design, run `/review-design` to ensure architecture clarity and mermaid diagrams
 
-Before pushing your branch, run **`/code-review`** to perform a structured local review:
-- Checks alignment with design docs
-- Spots logic/security/performance issues
-- Highlights redundant code and missing tests
-- Suggests documentation updates and next steps
+**Execute your plan:**
+- Run `/execute-plan` to step through tasks interactively:
+  - Reads `docs/ai/planning/feature-{name}.md`
+  - Presents tasks in order with context
+  - Captures status/notes for each task
+  - Prompts you to update documentation as you progress
 
-📘 Need the full checklist? See [WORKFLOW.md](WORKFLOW.md#code-review-workflow) for detailed guidance.
+**Before pushing your code:**
+- Run `/code-review` to perform a structured local review:
+  - Checks alignment with design docs
+  - Spots logic/security/performance issues
+  - Highlights redundant code and missing tests
+  - Suggests documentation updates
 
-After planning, run **`/execute-plan`** to step through each task interactively:
-- Reads `docs/ai/planning/feature-{name}.md`
-- Presents tasks in order with context
-- Captures status/notes for each task
-- Reminds you to update docs and rerun `/code-review`
-- Prompts you to generate tests via `/writing-test` for full coverage
+**Generate comprehensive tests:**
+- Run `/writing-test` to create unit and integration tests targeting 100% coverage
 
-This creates feature-specific files:
+This workflow creates feature-specific files:
 - `docs/ai/requirements/feature-{name}.md`
 - `docs/ai/design/feature-{name}.md`
 - `docs/ai/planning/feature-{name}.md`
 - `docs/ai/implementation/feature-{name}.md`
 - `docs/ai/testing/feature-{name}.md`
-
-The workflow provides structured prompts at each step and generates git commands for you to run manually.
-
-📖 **Detailed workflow guide:** See [WORKFLOW.md](WORKFLOW.md) for a complete guide with examples.
 
 ## Use Cases
 
@@ -293,7 +298,7 @@ The `.ai-devkit.json` file tracks your setup:
 
 ```json
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "environment": "cursor",
   "initializedPhases": ["requirements", "design", "planning"],
   "createdAt": "2025-10-14T...",
@@ -354,7 +359,6 @@ MIT
 
 | Quick links | Description |
 |-------------|-------------|
-| [WORKFLOW.md](WORKFLOW.md) | Full feature workflow guide (+ code review checklist) |
 | [CHANGELOG.md](CHANGELOG.md) | Recent changes and release notes |
 | [templates/](templates/) | Phase and environment templates |
 
