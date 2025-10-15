@@ -8,3 +8,4 @@ dist/
 .cursor/
 .claude/
 docs/ai/
+AGENTS.md
