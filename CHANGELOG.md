@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `/capture-knowledge` - Analyze and explain how code works from any entry point
+  - Supports file, folder, function, and API endpoint analysis
+  - Recursive dependency analysis with configurable depth (max: 3)
+  - Automatic generation of mermaid diagrams (flowcharts, sequence, architecture, class diagrams)
+  - Knowledge capture documentation saved to `docs/ai/implementation/knowledge-{feature-name}.md`
+  - Visual dependency tree and component relationship mapping
+  - Includes error handling, performance considerations, and improvement suggestions
+
 ## [0.2.0] - 2025-10-14
 
 ### Added
