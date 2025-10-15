@@ -51,7 +51,6 @@ export async function initCommand(options: InitOptions) {
 
   ensureGitRepository();
 
-  // Check if already initialized
   if (await configManager.exists()) {
     const { shouldContinue } = await inquirer.prompt([
       {
@@ -68,7 +67,6 @@ export async function initCommand(options: InitOptions) {
     }
   }
 
-  // Determine environment
   let environment: Environment | undefined = options.environment;
   if (!environment) {
     const envAnswer = await inquirer.prompt([
@@ -86,7 +84,6 @@ export async function initCommand(options: InitOptions) {
     environment = envAnswer.environment;
   }
 
-  // Determine which phases to initialize
   let selectedPhases: Phase[] = [];
   
   if (options.all) {
@@ -116,11 +113,9 @@ export async function initCommand(options: InitOptions) {
 
   console.log(chalk.blue('\nInitializing AI DevKit...\n'));
 
-  // Create or update config
   await configManager.create(environment);
   console.log(chalk.green('✓ Created configuration file'));
 
-  // Copy environment templates
   if (environment) {
     const envExists = await templateManager.environmentFilesExist(environment);
     let shouldCopyEnv = true;
@@ -147,7 +142,6 @@ export async function initCommand(options: InitOptions) {
     }
   }
 
-  // Copy phase templates
   for (const phase of selectedPhases) {
     const exists = await templateManager.fileExists(phase);
     let shouldCopy = true;

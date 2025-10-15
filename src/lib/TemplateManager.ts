@@ -7,7 +7,6 @@ export class TemplateManager {
   private targetDir: string;
 
   constructor(targetDir: string = process.cwd()) {
-    // Templates are in the package directory, not the target directory
     this.templatesDir = path.join(__dirname, '../../templates');
     this.targetDir = targetDir;
   }
@@ -42,25 +41,26 @@ export class TemplateManager {
   private async copyCursorTemplates(): Promise<string[]> {
     const files: string[] = [];
 
-    // Copy rules to .cursor/rules directory (new format, .cursorrules is deprecated)
+    const workspaceSource = path.join(this.templatesDir, 'env', 'cursor', 'AGENTS.md');
+    const workspaceTarget = path.join(this.targetDir, 'AGENTS.md');
+    await fs.copy(workspaceSource, workspaceTarget);
+    files.push(workspaceTarget);
+
     const rulesSourceDir = path.join(this.templatesDir, 'env', 'cursor', 'rules');
     const rulesTargetDir = path.join(this.targetDir, '.cursor', 'rules');
     await fs.ensureDir(rulesTargetDir);
     await fs.copy(rulesSourceDir, rulesTargetDir);
     
-    // List all rule files for feedback
     const ruleFiles = await fs.readdir(rulesSourceDir);
     ruleFiles.forEach(file => {
       files.push(path.join(rulesTargetDir, file));
     });
 
-    // Copy slash commands to .cursor/commands directory
-    const commandsSourceDir = path.join(this.templatesDir, 'env', 'cursor', 'commands');
+    const commandsSourceDir = path.join(this.templatesDir, 'commands');
     const commandsTargetDir = path.join(this.targetDir, '.cursor', 'commands');
     await fs.ensureDir(commandsTargetDir);
     await fs.copy(commandsSourceDir, commandsTargetDir);
     
-    // List all command files for feedback
     const commandFiles = await fs.readdir(commandsSourceDir);
     commandFiles.forEach(file => {
       files.push(path.join(commandsTargetDir, file));
@@ -72,21 +72,16 @@ export class TemplateManager {
   private async copyClaudeTemplates(): Promise<string[]> {
     const files: string[] = [];
 
-    // Copy Claude workspace config
     const workspaceSource = path.join(this.templatesDir, 'env', 'claude', 'CLAUDE.md');
-    const workspaceDir = path.join(this.targetDir, '.claude');
-    const workspaceTarget = path.join(workspaceDir, 'CLAUDE.md');
-    await fs.ensureDir(workspaceDir);
+    const workspaceTarget = path.join(this.targetDir, 'CLAUDE.md');
     await fs.copy(workspaceSource, workspaceTarget);
     files.push(workspaceTarget);
 
-    // Copy Claude commands
-    const commandsSourceDir = path.join(this.templatesDir, 'env', 'claude', 'commands');
+    const commandsSourceDir = path.join(this.templatesDir, 'commands');
     const commandsTargetDir = path.join(this.targetDir, '.claude', 'commands');
     await fs.ensureDir(commandsTargetDir);
     await fs.copy(commandsSourceDir, commandsTargetDir);
     
-    // List all command files for feedback
     const commandFiles = await fs.readdir(commandsSourceDir);
     commandFiles.forEach(file => {
       files.push(path.join(commandsTargetDir, file));

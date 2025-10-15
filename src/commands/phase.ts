@@ -8,13 +8,11 @@ export async function phaseCommand(phaseName?: string) {
   const configManager = new ConfigManager();
   const templateManager = new TemplateManager();
 
-  // Check if initialized
   if (!(await configManager.exists())) {
     console.log(chalk.red('Error: AI DevKit not initialized. Run `ai-devkit init` first.'));
     return;
   }
 
-  // Determine which phase to add
   let phase: Phase;
   
   if (phaseName && AVAILABLE_PHASES.includes(phaseName as Phase)) {
@@ -56,7 +54,6 @@ export async function phaseCommand(phaseName?: string) {
     phase = selectedPhase;
   }
 
-  // Check if phase already exists
   const exists = await templateManager.fileExists(phase);
   let shouldCopy = true;
 
@@ -77,7 +74,6 @@ export async function phaseCommand(phaseName?: string) {
     return;
   }
 
-  // Copy the template
   const file = await templateManager.copyPhaseTemplate(phase);
   await configManager.addPhase(phase);
 

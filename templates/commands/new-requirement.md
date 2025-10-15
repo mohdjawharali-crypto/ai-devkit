@@ -106,7 +106,7 @@ Provide the MR/PR description:
 ### Testing
 - Unit tests: [coverage/status]
 - Integration tests: [status]
-- Manual testing: ✓ Completed
+- Manual testing: Completed
 - Test documentation: `docs/ai/testing/feature-{name}.md`
 
 ### Checklist

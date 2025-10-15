@@ -129,7 +129,8 @@ your-project/
         ├── update-planning.md
         ├── check-implementation.md
         ├── review-design.md
-        └── review-requirements.md
+        ├── review-requirements.md
+        └── capture-knowledge.md
 ```
 
 ### For Claude Code:
@@ -144,7 +145,8 @@ your-project/
         ├── update-planning.md
         ├── check-implementation.md
         ├── review-design.md
-        └── review-requirements.md
+        ├── review-requirements.md
+        └── capture-knowledge.md
 ```
 
 ## Customizing Templates
@@ -198,6 +200,7 @@ Available commands:
 - `check-implementation` - Compare implementation with design
 - `review-design` - Review system design and architecture
 - `review-requirements` - Review and summarize requirements
+- `capture-knowledge` - Analyze and explain code with recursive dependency analysis and Mermaid diagrams
 
 Commands can be referenced in Claude Code chats to guide AI assistance through your development phases.
 
@@ -278,6 +281,83 @@ This workflow creates feature-specific files:
 - `docs/ai/planning/feature-{name}.md`
 - `docs/ai/implementation/feature-{name}.md`
 - `docs/ai/testing/feature-{name}.md`
+
+### Understanding Existing Code
+
+**Use the `/capture-knowledge` command to analyze and document code:**
+
+The `capture-knowledge` command helps you understand how existing code works by analyzing it from any entry point and generating comprehensive documentation with visual diagrams.
+
+**In Cursor:**
+```
+/capture-knowledge <entry-point> [options]
+```
+
+**In Claude Code:**
+```
+Use the capture-knowledge command to analyze <entry-point>
+```
+
+**Entry Point Types:**
+- **File**: `/capture-knowledge src/api/users.ts` - Analyzes a specific file
+- **Folder**: `/capture-knowledge src/services/` - Analyzes an entire module
+- **Function**: `/capture-knowledge calculateTotalPrice` - Analyzes a specific function
+- **API Endpoint**: `/capture-knowledge POST:/api/users` - Analyzes an API endpoint flow
+
+**Options:**
+- `--depth <n>` - Control recursion depth (default: 3)
+- `--save` - Save output to `docs/ai/knowledge/`
+- `--diagram-only` - Generate only diagrams
+
+**What You Get:**
+- 📖 **Detailed Explanation**: Natural language description of how the code works
+- 🔍 **Implementation Details**: Key components, logic flow, and design patterns
+- 🔗 **Recursive Dependency Analysis**: Automatically traces and explains all dependencies
+- 📊 **Mermaid Diagrams**: Visual flowcharts, sequence diagrams, and architecture diagrams
+- 💡 **Insights**: Performance considerations, security notes, potential improvements
+
+**Example Outputs:**
+
+For functions, you get:
+- Flowchart showing execution path
+- Parameter and return value documentation
+- Called functions and their purposes
+- Error handling strategy
+
+For API endpoints, you get:
+- Sequence diagram showing request flow
+- Validation and authentication steps
+- Database operations
+- Response format
+
+For modules/folders, you get:
+- Architecture diagram showing component relationships
+- Overview of each file's purpose
+- Module boundaries and dependencies
+
+**Use Cases:**
+- 🎯 Onboarding new developers to understand the codebase
+- 📚 Generating documentation for complex systems
+- 🔍 Debugging by understanding complete execution flow
+- 🏗️ Refactoring with full context of dependencies
+- 📖 Creating knowledge base entries
+
+**Example Workflow:**
+```bash
+# Understand a payment function
+/capture-knowledge processPayment --depth 4
+
+# Document an entire authentication module
+/capture-knowledge src/auth/ --save
+
+# Analyze an API endpoint
+/capture-knowledge POST:/api/checkout
+
+# Get just the diagrams for a complex function
+/capture-knowledge handleOrderProcessing --diagram-only
+```
+
+The analysis is saved to `docs/ai/knowledge/` and can be versioned alongside your code.
 
 ## Use Cases
 
