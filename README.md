@@ -2,7 +2,7 @@
 
 A CLI toolkit for AI-assisted software development with structured phase templates and environment setup for Cursor and Claude Code.
 
-[![npm version](https://img.shields.io/npm/v/ai-devkit.svg)](https://www.npmjs.com/package/chatgpt-app-kit)
+[![npm version](https://img.shields.io/npm/v/ai-devkit.svg)](https://www.npmjs.com/package/ai-devkit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
